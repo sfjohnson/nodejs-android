@@ -29,3 +29,5 @@ jobs:
         run: |
           cd termux-packages
           ./build-package.sh nodejs-lts
+        env:
+          NDK: /usr/local/lib/android/sdk/ndk-bundle
