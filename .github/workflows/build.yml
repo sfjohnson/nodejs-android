@@ -26,4 +26,6 @@ jobs:
           ./scripts/setup-ubuntu.sh
 
       - name: Build
-        run: ./build-package.sh nodejs-lts
+        run: |
+          cd termux-packages
+          ./build-package.sh nodejs-lts
