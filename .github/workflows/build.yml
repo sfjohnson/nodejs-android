@@ -1,0 +1,26 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Checkout termux-packages
+        run: git clone -b master https://github.com/termux/termux-packages
+
+      - name: Setup dependencies
+        run: |
+          cd termux-packages
+          ./scripts/setup-ubuntu.sh
+
+      - name: Build
+        run: ./build-package.sh nodejs-lts
