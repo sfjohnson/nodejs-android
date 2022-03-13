@@ -15,9 +15,7 @@ jobs:
           persist-credentials: false
 
       - name: Checkout termux-packages
-        run: |
-          git clone -n https://github.com/termux/termux-packages
-          git checkout 8a5fe78e76d61ea95f832a3af173706034a76344
+        run: git clone https://github.com/termux/termux-packages
 
       - name: Setup dependencies
         run: |
@@ -34,6 +32,9 @@ jobs:
         env:
           NDK: /usr/local/lib/android/sdk/ndk/23.1.7779620
 
+      - name: Get Node version
+        run: echo "NODE_VERSION=$(ls termux-packages/output | grep nodejs-lts | sed -ne 's/-[^-]*$//;s/.*_//;p')" >> $GITHUB_ENV
+
       - name: Zip
         run: |
           cd /data/data/com.termux/files/usr
@@ -42,12 +43,13 @@ jobs:
           mv bin/npm dist/bin
           mv bin/npx dist/bin
           mv lib dist
+          mv share/doc/nodejs-lts/LICENSE dist
           cd dist
-          zip -r ../node-v16.14.0-android-arm64.zip .
+          zip -r ../node-v${NODE_VERSION}-android-arm64.zip .
 
       - name: Create release
         uses: softprops/action-gh-release@v1
         with:
-          files: /data/data/com.termux/files/usr/node-v16.14.0-android-arm64.zip
+          files: /data/data/com.termux/files/usr/node-v${{ env.NODE_VERSION }}-android-arm64.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
