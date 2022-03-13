@@ -35,7 +35,7 @@ jobs:
       - name: Get Node version
         run: echo "NODE_VERSION=$(ls termux-packages/output | grep nodejs-lts | sed -ne 's/-[^-]*$//;s/.*_//;p')" >> $GITHUB_ENV
 
-      - name: Zip
+      - name: Make tar
         run: |
           cd /data/data/com.termux/files/usr
           mkdir -p dist/bin
@@ -45,11 +45,11 @@ jobs:
           mv lib dist
           mv share/doc/nodejs-lts/LICENSE dist
           cd dist
-          zip -r ../node-v${NODE_VERSION}-android-arm64.zip .
+          tar -cJf ../node-v${NODE_VERSION}-android-arm64.tar.xz .
 
       - name: Create release
         uses: softprops/action-gh-release@v1
         with:
-          files: /data/data/com.termux/files/usr/node-v${{ env.NODE_VERSION }}-android-arm64.zip
+          files: /data/data/com.termux/files/usr/node-v${{ env.NODE_VERSION }}-android-arm64.tar.xz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
