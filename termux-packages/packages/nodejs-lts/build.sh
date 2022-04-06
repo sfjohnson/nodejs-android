@@ -72,13 +72,13 @@ termux_step_configure() {
 	LDFLAGS+=" -ldl"
 
 	local _SHARED_OPENSSL_INCLUDES=$TERMUX_PREFIX/include
-	local _SHARED_OPENSSL_LIBPATH=\$\$ORIGIN/../lib/openssl-1.1
+	local _SHARED_OPENSSL_LIBPATH=$TERMUX_PREFIX/lib/openssl-1.1
 
 	if [ "${TERMUX_PKG_VERSION%%.*}" != "16" ]; then
 		termux_error_exit 'Please migrate to using openssl (instead of openssl-1.1).'
 	else
 		_SHARED_OPENSSL_INCLUDES=$TERMUX_PREFIX/include/openssl-1.1
-		LDFLAGS="-Wl,-rpath=$_SHARED_OPENSSL_LIBPATH $LDFLAGS"
+		LDFLAGS="-Wl,-rpath=\$\$ORIGIN/../lib/openssl-1.1 $LDFLAGS"
 	fi
 
 	# See note above TERMUX_PKG_DEPENDS why we do not use a shared libuv.
