@@ -72,13 +72,12 @@ termux_step_configure() {
 	LDFLAGS+=" -ldl"
 
 	local _SHARED_OPENSSL_INCLUDES=$TERMUX_PREFIX/include
-	local _SHARED_OPENSSL_LIBPATH=$TERMUX_PREFIX/lib
+	local _SHARED_OPENSSL_LIBPATH=$$ORIGIN/../lib/openssl-1.1
 
 	if [ "${TERMUX_PKG_VERSION%%.*}" != "16" ]; then
 		termux_error_exit 'Please migrate to using openssl (instead of openssl-1.1).'
 	else
 		_SHARED_OPENSSL_INCLUDES=$TERMUX_PREFIX/include/openssl-1.1
-		_SHARED_OPENSSL_LIBPATH=$TERMUX_PREFIX/lib/openssl-1.1
 		LDFLAGS="-Wl,-rpath=$_SHARED_OPENSSL_LIBPATH $LDFLAGS"
 	fi
 
