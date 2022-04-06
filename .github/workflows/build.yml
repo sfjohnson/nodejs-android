@@ -14,9 +14,6 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Checkout termux-packages
-        run: git clone https://github.com/termux/termux-packages
-
       - name: Setup dependencies
         run: |
           sudo apt update
