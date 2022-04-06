@@ -30,7 +30,9 @@ jobs:
           NDK: /usr/local/lib/android/sdk/ndk/23.1.7779620
 
       - name: Get Node version
-        run: echo "NODE_VERSION=$(ls termux-packages/output | grep nodejs-lts | sed -ne 's/-[^-]*$//;s/.*_//;p')" >> $GITHUB_ENV
+        run: |
+          source termux-packages/packages/nodejs-lts/build.sh
+          echo "NODE_VERSION=$(echo $TERMUX_PKG_VERSION)" >> $GITHUB_ENV
 
       - name: Make tar
         run: |

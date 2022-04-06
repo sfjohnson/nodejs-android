@@ -78,7 +78,7 @@ termux_step_configure() {
 		termux_error_exit 'Please migrate to using openssl (instead of openssl-1.1).'
 	else
 		_SHARED_OPENSSL_INCLUDES=$TERMUX_PREFIX/include/openssl-1.1
-		LDFLAGS="-Wl,-rpath,\$ORIGIN/../lib/openssl-1.1,-rpath,\$ORIGIN/../lib $LDFLAGS"
+		LDFLAGS="-Wl,-rpath,'\$\$ORIGIN/../lib/openssl-1.1',-rpath,'\$\$ORIGIN/../lib' $LDFLAGS"
 	fi
 
 	# See note above TERMUX_PKG_DEPENDS why we do not use a shared libuv.
