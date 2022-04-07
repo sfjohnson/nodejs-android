@@ -15,7 +15,7 @@ TERMUX_PKG_REPLACES="openssl (<< 1.1.1m)"
 
 termux_step_pre_configure() {
 	test -d $TERMUX_PREFIX/include/openssl && mv $TERMUX_PREFIX/include/openssl{,.tmp} || :
-	LDFLAGS="-L$TERMUX_PREFIX/lib/openssl-1.1 -Wl,-rpath=$TERMUX_PREFIX/lib/openssl-1.1 $LDFLAGS"
+	LDFLAGS="-L$TERMUX_PREFIX/lib/openssl-1.1 -Wl,-rpath,'\$\$ORIGIN/../lib/openssl-1.1' $LDFLAGS"
 }
 
 termux_step_configure() {
